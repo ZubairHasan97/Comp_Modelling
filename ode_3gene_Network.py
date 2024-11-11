@@ -5,22 +5,25 @@ from scipy.integrate import odeint
 # Modelling 3-gene Oscillatory_Network: w/Negative Feedback response
 
 # initial state
-y0 = [0.3,0.5,.4]
+print("Enter intital state of 3 genes: e.g. 2 3 4")
+y0 = [float(x) for x in input().split()]
+# print(y0)
 t = np.linspace(0,200, num=100)
 
-# parameters
-k_1 = 0.50
-gam_1 = 0.10
-k_2 = 0.50
-gam_2 = 0.10
-k_3 = 0.50
-gam_3 = 0.10
-n = 9
-c = 1
-param = [k_1, gam_1, k_2, gam_2, k_3, gam_3, n, c]
+# key parameters
+k_1 = float(input("production_rate_G1 (K1): "))
+gamma_1 = float(input("degradation_rate_G1 (gamma_1): "))
+k_2 = float(input("production_rate_G2 (K2): "))
+gamma_2 = float(input("degradation_rate_G2 (gamma_2): "))
+k_3 = float(input("production_rate_G3 (K3): "))
+gamma_3 = float(input("degradation_rate_G3 (gamma_3): "))
+n = float(input("constant n: (e.g. within 1-9) "))
+c = float(input("constant C: "))
+param = [k_1, gamma_1, k_2, gamma_2, k_3, gamma_3, n, c]
 
 # simlation function
 def sim3gene(init_var, timepoints, params):
+
   g1 = init_var[0]
   g2 = init_var[1]
   g3 = init_var[2]

@@ -9,14 +9,14 @@ num_simulations = int(input("Enter the # of Sim: (i.e. 5): \n"))
 sim_time = int(input("Enter Sim Time: (i.e. 500s): \n"))
 
 # key parameters
-k_1 = 2
-gamma_1 = 0.1
-k_2 = 2
-gamma_2 = 0.1
-k_3 = 2
-gamma_3 = 0.1
-n = 9
-c = 1
+k_1 = float(input("production_rate_G1 (K1): "))
+gamma_1 = float(input("degradation_rate_G1 (gamma_1): "))
+k_2 = float(input("production_rate_G2 (K2): "))
+gamma_2 = float(input("degradation_rate_G2 (gamma_2): "))
+k_3 = float(input("production_rate_G3 (K3): "))
+gamma_3 = float(input("degradation_rate_G3 (gamma_3): "))
+n = float(input("constant n: (e.g. within 1-9) "))
+c = float(input("constant C: "))
 
 all_sim_data = []  # Store data from each simulation
 
@@ -103,25 +103,28 @@ def plot_avrg_trajectory(allSimData, nSim):
   plt.xlabel("Time")
   plt.ylabel("Expression-Level")
   plt.legend()
+  plt.savefig('plot_avrg_trajectory.png')
 
 def plot_indiv_trajectory(allSimData, nSim):
 
   fig1, axes = plt.subplots(nSim, 3, sharex=True, figsize=(14, 3 * nSim))
   plt.title("SSA Model of 3-Gene-Oscillatory_Network")
 
+
   for i, (time_points, G1_values, G2_values, G3_values) in enumerate(allSimData):
       axes[i,0].plot(time_points, G1_values, label="G1", color="b")
       axes[i,1].plot(time_points, G2_values, label="G2", color="r")
       axes[i,2].plot(time_points, G3_values, label="G3", color="g")
 
-      axes[i,0].set_ylabel(f"Simulation {i + 1}\nG1 Expression")
-      axes[i,1].set_ylabel(f"Simulation {i + 1}\nG2 Expression")
-      axes[i,2].set_ylabel(f"Simulation {i + 1}\nG3 Expression")
+      axes[i,0].set_ylabel(f"Sim {i + 1}\nG1 Expr")
+      axes[i,1].set_ylabel(f"Sim {i + 1}\nG2 Expr")
+      axes[i,2].set_ylabel(f"Sim {i + 1}\nG3 Expr")
 
       axes[-1, 0].set_xlabel("Time")
       axes[-1, 1].set_xlabel("Time")
       axes[-1, 2].set_xlabel("Time")
       # print(i, G1_values, G2_values, G3_values) # debugging
+      plt.savefig('plot_indiv_trajectory.png')
 
 def plot_trajectory(time, Gn1, Gn2, Gn3): #to plot single simulation data points
   print("!!! NUMBER OF SIM IS ONLY ONE !!!")
@@ -137,17 +140,22 @@ def plot_trajectory(time, Gn1, Gn2, Gn3): #to plot single simulation data points
   ax3.legend(handles=line3)
   plt.xlabel('Time')
   plt.ylabel('Expression level')
+  plt.savefig('plot_trajectory.png')
 
 # Plotting the simulated results
-if num_simulations > 1:
+if 1 < num_simulations <= 5:
 
   plot_avrg_trajectory(all_sim_data, num_simulations)
 
   plot_indiv_trajectory(all_sim_data, num_simulations)
 
-else:
+elif num_simulations > 5:
 
-  plot_trajectory(all_sim_data[0][0], all_sim_data[0][1], all_sim_data[0][2], all_sim_data[0][3])
+    plot_avrg_trajectory(all_sim_data, num_simulations)
+
+else:
+    
+    plot_trajectory(all_sim_data[0][0], all_sim_data[0][1], all_sim_data[0][2], all_sim_data[0][3])
 
 plt.tight_layout()
 plt.show()
