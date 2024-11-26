@@ -1,5 +1,5 @@
 # *Comp_Bio*
-Run the .py file to run the simulation from CLI or check the jupyter notebook
+Run the python file to execute the simulation from CLI or run it interactively from the Jupyter notebook
 ```bash
 anon@xy:~$ python3 ssa_3gene_Network.py
 ```
